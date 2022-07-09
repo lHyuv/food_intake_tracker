@@ -29,6 +29,7 @@ class CreateUsersTable extends Migration
             $table->string('weight');
             $table->string('gender');
             $table->foreignUuid('healthissue_id')->constrained('healthissues')->onDelete('cascade')->onUpdate('cascade');  
+            $table->foreignUuid('role_id')->constrained('roles')->onDelete('cascade')->onUpdate('cascade');  
             //
             $table->string('status')->default('Active');
             $table->timestamps();

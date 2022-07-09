@@ -33,6 +33,7 @@ class User extends Authenticatable
         'weight',
         'gender',
         'healthissue_id',
+        'role_id',
         'status',
     ]);
 

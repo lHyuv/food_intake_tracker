@@ -1,0 +1,21 @@
+1 Install Composer
+
+2 Create project
+
+On terminal:
+
+composer create-project --prefer-dist laravel/laravel food_intake_tracker
+
+3 Install default UI
+
+On terminal:
+
+composer require laravel/ui
+
+php artisan ui bootstrap
+
+php artisan ui bootstrap --auth
+
+npm install
+ 
+npm run dev

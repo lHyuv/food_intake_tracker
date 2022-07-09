@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateIntakes extends Migration
+class CreateDailylimits extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,18 @@ class CreateIntakes extends Migration
      */
     public function up()
     {
-        if(Schema::hasTable('intakes')) return; 
-        Schema::create('intakes', function (Blueprint $table) {
+        if(Schema::hasTable('dailylimits')) return;
+        Schema::create('dailylimits', function (Blueprint $table) {
             $table->uuid('id');
             $table->primary('id');
             //
             $table->foreignUuid('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignUuid('food_id')->constrained('foods')->onDelete('cascade')->onUpdate('cascade'); 
-            $table->float('serving');
-             
-             //
-             $table->string('status')->default('Active');
-             $table->timestamps();
-             $table->softDeletes();
+            $table->foreignUuid('dailylimit_id')->constrained('dailylimits')->onDelete('cascade')->onUpdate('cascade');
+            $table->float('value');
+            //
+            $table->string('status')->default('Active');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -36,6 +35,6 @@ class CreateIntakes extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('intakes');
+        Schema::dropIfExists('dailylimits');
     }
 }

@@ -19,7 +19,7 @@ class CreateDailylimits extends Migration
             $table->primary('id');
             //
             $table->foreignUuid('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignUuid('dailylimit_id')->constrained('dailylimits')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignUuid('foodproperty_id')->constrained('foodproperties')->onDelete('cascade')->onUpdate('cascade');
             $table->float('value');
             //
             $table->string('status')->default('Active');

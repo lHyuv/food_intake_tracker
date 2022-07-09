@@ -17,5 +17,21 @@ php artisan ui bootstrap
 php artisan ui bootstrap --auth
 
 npm install
- 
+
 npm run dev
+
+4 Migrate to DB
+
+On terminal:
+
+php artisan migrate
+
+-- To open:
+
+On terminal:
+
+php artisan serve
+
+On browser:
+
+Type url and enter

@@ -8,6 +8,11 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+//
+use App\Models\HealthIssues;
+use App\Models\UserIssues;
+use App\Models\Role;
+use Illuminate\Support\Facades\DB;
 
 class RegisterController extends Controller
 {
@@ -53,6 +58,8 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            //added fields 
+            'role_id' => ['required', 'string', 'max:255'],
         ]);
     }
 
@@ -64,10 +71,44 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            //added fields 
+            'physical_activity' => $data['physical_activity'],
+            'gender' => $data['gender'],
+            'age' => $data['age'],
+            'weight' => $data['weight'],
+            'role_id' => $data['role_id'],
         ]);
+
+        $userissue = null;
+
+        if($data['healthissues']){
+
+            foreach($data['healthissues'] as $key => $value) {
+                // $key will contain your article id
+                $userissue = UserIssues::create([
+                    'user_id' => $user->id,
+                    'healthissue_id' => $key,
+                ]);
+            }
+        }
+
+
+        return $user;
+    }
+
+    protected function showRegistrationForm()
+    {
+        $roles = DB::table('roles')->where('status', 'Active')->get();
+        $healthissues = DB::table('health_issues')->where('status', 'Active')->get();
+        return view('auth.register', [
+            'roles' =>  $roles,
+            'healthissues' => $healthissues,
+        ]);
+
     }
 }

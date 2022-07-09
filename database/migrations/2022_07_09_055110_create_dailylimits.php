@@ -13,13 +13,13 @@ class CreateDailylimits extends Migration
      */
     public function up()
     {
-        if(Schema::hasTable('dailylimits')) return;
-        Schema::create('dailylimits', function (Blueprint $table) {
+        if(Schema::hasTable('daily_limits')) return;
+        Schema::create('daily_limits', function (Blueprint $table) {
             $table->uuid('id');
             $table->primary('id');
             //
             $table->foreignUuid('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignUuid('foodproperty_id')->constrained('foodproperties')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignUuid('foodproperty_id')->constrained('food_properties')->onDelete('cascade')->onUpdate('cascade');
             $table->float('value');
             //
             $table->string('status')->default('Active');
@@ -35,6 +35,6 @@ class CreateDailylimits extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dailylimits');
+        Schema::dropIfExists('daily_limits');
     }
 }

@@ -24,11 +24,10 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             //
-            $table->string('physical_activity');
-            $table->string('age');
-            $table->string('weight');
-            $table->string('gender');
-            $table->foreignUuid('healthissue_id')->constrained('healthissues')->onDelete('cascade')->onUpdate('cascade');  
+            $table->string('physical_activity')->nullable();
+            $table->integer('age')->nullable();
+            $table->float('weight')->nullable();
+            $table->string('gender')->nullable();
             $table->foreignUuid('role_id')->constrained('roles')->onDelete('cascade')->onUpdate('cascade');  
             //
             $table->string('status')->default('Active');

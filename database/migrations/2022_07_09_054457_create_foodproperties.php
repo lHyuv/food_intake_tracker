@@ -13,8 +13,8 @@ class CreateFoodproperties extends Migration
      */
     public function up()
     {
-        if(Schema::hasTable('foodproperties')) return;
-        Schema::create('foodproperties', function (Blueprint $table) {
+        if(Schema::hasTable('food_properties')) return;
+        Schema::create('food_properties', function (Blueprint $table) {
             $table->uuid('id');
             $table->primary('id');
             //
@@ -34,6 +34,6 @@ class CreateFoodproperties extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('foodproperties');
+        Schema::dropIfExists('food_properties');
     }
 }

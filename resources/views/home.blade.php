@@ -12,9 +12,21 @@
 
              
                         <label>Food Name</label>
-                        <input type="text" name = "" id = "" class = "form-control">
+                        <input type="text" name = "food_name" id = "add_food_name" class = "form-control">
                         <button class = "btn btn-primary mt-2" type="submit" 
-                        onclick = ""
+                        onclick = "
+                        submitForm(
+                            '{{ URL::to('/') }}/api/v1/foods',
+                            'POST', 
+                            {
+                                'food_name' :   $('#add_food_name').val(),
+                            },
+                          
+                            function(){
+                                alert('Submitted!');
+                            }
+                            );
+                        "
                         >Submit</button>
                 </div>
             </div>
@@ -32,7 +44,9 @@
              
                         <label>Food Name</label>
                         <select name="" id="" class = "form-control">
-
+                        @foreach($foods as $f)
+                                    <option value="{{$f->id}}">{{$f->food_name}}</option>
+                        @endforeach
                         </select>
 
                         <label>Property <sub> e.g. Vitamin</sub></label>
@@ -120,7 +134,9 @@
                             <tr>
                                 <td>
                                     <select name="" id="" class = "form-control">
-
+                                    @foreach($foods as $f)
+                                    <option value="{{$f->id}}">{{$f->food_name}}</option>
+                                    @endforeach
                                     </select>
                                 </td>
                                 <td>
@@ -137,4 +153,9 @@
         </div>
     </div>
 </div>
+<script>
+  sessionStorage.setItem('token', '{{ session("token") }}');
+  sessionStorage.setItem('user_id', '{{ session("user_id") }}');
+
+</script>
 @endsection

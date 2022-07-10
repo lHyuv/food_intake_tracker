@@ -13,6 +13,8 @@ class Food extends Model
 
     protected $guarded = ['id'];
 
+    protected $table = 'foods';
+
     protected $fillable = ([
         'food_name',
         'status',

@@ -13,6 +13,8 @@ class FoodProperties extends Model
 
     protected $guarded = ['id'];
 
+    protected $table = 'food_properties';
+
     protected $fillable = ([
         'property',
         'food_id',

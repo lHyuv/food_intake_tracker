@@ -14,3 +14,21 @@ const showElement = (type, value, mode) =>{
         $(selector + value).css('display', 'none');
     }
 };
+
+const submitForm = (url,method, data, action) =>{
+    $.ajax({
+        url: url,
+        method: method,
+        data: data,
+        headers: {
+            'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+        },
+        success: (data)=>{
+            console.log(data);
+            action();
+        },
+        error: ({responseJson})=>{
+            console.log(responseJson);
+        }
+    })
+};

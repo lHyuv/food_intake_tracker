@@ -14,6 +14,7 @@ use App\Models\UserIssues;
 use App\Models\Role;
 use Illuminate\Support\Facades\DB;
 
+
 class RegisterController extends Controller
 {
     /*
@@ -97,7 +98,13 @@ class RegisterController extends Controller
             }
         }
 
+        //Save Session
 
+        session()->put('token',$token);
+        session()->put('user_id',$user->id);
+        session()->save();
+
+        //Save Session:end 
         return $user;
     }
 

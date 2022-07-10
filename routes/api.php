@@ -18,10 +18,18 @@ Route::middleware('auth:sanctum')->get('/v1/user', function (Request $request) {
     return $request->user();
 });
 
+//Auth
+use App\Http\Controllers\AuthController;
+
+Route::post('/v1/login', [AuthController::class, 'login']);
+Route::post('/v1/register', [AuthController::class, 'register']);
+Route::post('/v1/logout', [AuthController::class, 'logout']);
+Route::middleware('auth:sanctum')->get('/v1/test', [AuthController::class, 'test']);
+
 //Food
 use App\Http\Controllers\FoodController;
 
-Route::middleware('auth:sanctum')->get('/v1/v1/foods', [FoodController::class, 'index']);
+Route::middleware('auth:sanctum')->get('/v1/foods', [FoodController::class, 'index']);
 
 Route::middleware('auth:sanctum')->get('/v1/foods/show_active', [FoodController::class, 'show_active']);
 

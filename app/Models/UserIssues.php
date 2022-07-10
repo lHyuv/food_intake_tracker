@@ -12,7 +12,9 @@ class UserIssues extends Model
     use Uuids, HasFactory, SoftDeletes;
     
     protected $guarded = ['id'];
-    
+
+    protected $table = 'user_issues';
+
     protected $fillable = ([
         'user_id',
         'healthissue_id',

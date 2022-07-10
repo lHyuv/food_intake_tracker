@@ -13,6 +13,8 @@ class DailyLimit extends Model
 
     protected $guarded = ['id'];
 
+    protected $table = 'daily_limits';
+
     protected $fillable = ([
 
         'user_id',

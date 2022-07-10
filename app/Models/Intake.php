@@ -13,6 +13,8 @@ class Intake extends Model
 
     protected $guarded = ['id'];
 
+    protected $table = 'intakes';
+
     protected $fillable = ([
         'user_id',
         'food_id',

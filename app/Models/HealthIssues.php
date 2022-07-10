@@ -13,6 +13,8 @@ class HealthIssues extends Model
 
     protected $guarded = ['id'];
 
+    protected $table = 'health_issues';
+
     protected $fillable = ([
         'name',
         'status',

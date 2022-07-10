@@ -1,3 +1,5 @@
+let global_ctr = 0;
+let tr = 'tr';
 const showElement = (type, value, mode) =>{
     let selector = "";
     if(type == "id"){
@@ -32,3 +34,7 @@ const submitForm = (url,method, data, action) =>{
         }
     })
 };
+
+const appendEl = (el, code) =>{
+    $(el).append(code);
+}

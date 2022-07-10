@@ -112,11 +112,31 @@
     <div class="row justify-content-center mt-3" id = "add_intake">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Intake Table</div>
+                <div class="card-header">
+                    Intake Table
+                </div>
 
                 <div class="card-body">
                     <button class = "btn btn-primary"
-                    onclick = ""
+                    onclick = '$("#first_row").append( 
+                    `<tr>
+                                <td>
+                                    <select name="food_id" id="intake_food_id_${global_ctr}" class = "form-control">
+                                    @foreach($foods as $f)
+                                    <option value="{{$f->id}}">{{$f->food_name}}</option>
+                                    @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="number" name = "serving" id = "intake_serving_${global_ctr}" class = "form-control">
+                                </td>
+                                <td>
+                                <button class = "btn"
+                                   onclick = "$(this).closest(tr).remove();"
+                                   ><small> <i class = "fas fa-times"></i> </small></button>
+                                </td>
+                            </tr>
+                    "`);'
                     >Add Intake <i class = "fas fa-plus"></i> </button>
 
                     <table class = "table table-striped">
@@ -125,22 +145,28 @@
                                 <th width = "50%">
                                     Food
                                 </th>
-                                <th width = "50%">
+                                <th width = "30%">
                                     Serving
+                                </th>
+                                <th width = "20%">
+                                    &nbsp;
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
+                        <tbody id = "first_row">
+                            <tr >
                                 <td>
-                                    <select name="" id="" class = "form-control">
+                                    <select name="food_id" id="intake_food_id_" class = "form-control">
                                     @foreach($foods as $f)
                                     <option value="{{$f->id}}">{{$f->food_name}}</option>
                                     @endforeach
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="number" name = "" id = "" class = "form-control">
+                                    <input type="number" name = "serving" id = "intake_serving_" class = "form-control">
+                                </td>
+                                <td>
+                                    &nbsp;
                                 </td>
                             </tr>
                         </tbody>

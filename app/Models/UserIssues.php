@@ -19,4 +19,12 @@ class UserIssues extends Model
         'status',
     
     ]);
+
+    public function users(){
+        return $this->belongsTo(User::class,'user_id');
+    }
+
+    public function healthissues(){
+        return $this->belongsTo(HealthIssues::class,'healthissue_id');
+    }
 }

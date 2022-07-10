@@ -32,7 +32,6 @@ class User extends Authenticatable
         'age',
         'weight',
         'gender',
-        'healthissue_id',
         'role_id',
         'status',
     ]);
@@ -55,4 +54,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function roles(){
+        return $this->belongsTo(Role::class,'role_id');
+    }
 }

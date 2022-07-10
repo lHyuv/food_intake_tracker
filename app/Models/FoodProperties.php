@@ -18,4 +18,8 @@ class FoodProperties extends Model
         'food_id',
         'status',
     ]);
+
+    public function foods(){
+        return $this->belongsTo(Food::class,'food_id');
+    }
 }

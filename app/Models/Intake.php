@@ -20,4 +20,12 @@ class Intake extends Model
         'status',
 
     ]);
+
+    public function users(){
+        return $this->belongsTo(User::class,'user_id');
+    }
+
+    public function foods(){
+        return $this->belongsTo(Food::class,'food_id');
+    }
 }

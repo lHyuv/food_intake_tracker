@@ -11,7 +11,8 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{ asset('custom/js/script.js') }}"></script>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -54,6 +55,51 @@
                                 </li>
                             @endif
                         @else
+                        <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre
+                                onclick="
+                                showElement('','.row.justify-content-center.mt-3','none');
+                                showElement('id','add_food','flex');
+                                "
+                                >
+                                Add Food 
+                                </a>
+
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre
+                                onclick="
+                                  showElement('','.row.justify-content-center.mt-3','none');
+                                      showElement('id','set_food_properties','flex');
+                                "
+                                >
+                               Set Food Properties
+                                </a>
+
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre
+                                onclick="
+                                    showElement('','.row.justify-content-center.mt-3','none');
+                                     showElement('id','view_intake','flex');
+                                "
+                                >
+                                Intake History 
+                                </a>
+
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre
+                                onclick="
+                                  showElement('','.row.justify-content-center.mt-3','none');
+                                   showElement('id','view_results','flex');
+                                "
+                                >
+                                View Results 
+                                </a>
+                                
+                            </li>
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
@@ -80,6 +126,5 @@
         <main class="py-4">
             @yield('content')
         </main>
-    </div>
-</body>
-</html>
+        @include('layouts.footer')
+

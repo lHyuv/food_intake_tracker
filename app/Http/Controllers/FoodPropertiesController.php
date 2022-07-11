@@ -86,5 +86,15 @@ class FoodPropertiesController extends Controller
         ];
     }
 
+    public function show_food($id){
+        $data = FoodProperties::with([
+            'foods',
 
+         ])->where('food_id',$id)->where('status','Active')->get();
+
+        return [
+            'message' => 'Successfully retrieved',
+            'data' => $data
+        ];
+    }
 }

@@ -11,7 +11,9 @@ class FoodController extends Controller
 {
     //
     public function index(){
-        $data = Food::get();
+        $data = Food::with([
+            'foodproperties',
+         ])->get();
 
         return [
             'message' => 'Successfully retrieved',
@@ -20,7 +22,9 @@ class FoodController extends Controller
     }
 
     public function show_active(){
-        $data = Food::where('status','Active')->get();
+        $data = Food::with([
+            'foodproperties',
+         ])->where('status','Active')->get();
 
         return [
             'message' => 'Successfully retrieved',
@@ -29,7 +33,9 @@ class FoodController extends Controller
     }
 
     public function show($id){
-        $data = Food::find($id);
+        $data = Food::with([
+            'foodproperties',
+         ])->find($id);
 
         return [
             'message' => 'Successfully retrieved',
@@ -52,28 +58,44 @@ class FoodController extends Controller
         $data =  Food::create($request->all());
         //
         FoodProperties::create([
-            'property_name' => 'VitaminA',
+            'property' => 'VitaminA',
+            'food_id' => $data->id,
+            'amount' => 0,
         ]);
         FoodProperties::create([
-            'property_name' => 'VitaminC',
+            'property' => 'VitaminC',
+            'food_id' => $data->id,
+            'amount' => 0,
         ]);
         FoodProperties::create([
-            'property_name' => 'VitaminD',
+            'property' => 'VitaminD',
+            'food_id' => $data->id,
+            'amount' => 0,
         ]);
         FoodProperties::create([
-            'property_name' => 'VitaminE',
+            'property' => 'VitaminE',
+            'food_id' => $data->id,
+            'amount' => 0,
         ]);
         FoodProperties::create([
-            'property_name' => 'Salt',
+            'property' => 'Salt',
+            'food_id' => $data->id,
+            'amount' => 0,
         ]);
         FoodProperties::create([
-            'property_name' => 'Sugar',
+            'property' => 'Sugar',
+            'food_id' => $data->id,
+            'amount' => 0,
         ]);
         FoodProperties::create([
-            'property_name' => 'Fat',
+            'property' => 'Fat',
+            'food_id' => $data->id,
+            'amount' => 0,
         ]);
         FoodProperties::create([
-            'property_name' => 'Protein',
+            'property' => 'Protein',
+            'food_id' => $data->id,
+            'amount' => 0,
         ]);
         
         //

@@ -87,5 +87,15 @@ class DailyLimitController extends Controller
         ];
     }
 
+    public function show_user($id){
+        $data = DailyLimit::with([
+            'foodproperties',
+            'users',
+         ])->where('user_id',$id)->where('status','Active')->get();
 
+        return [
+            'message' => 'Successfully retrieved',
+            'data' => $data
+        ];
+    }
 }

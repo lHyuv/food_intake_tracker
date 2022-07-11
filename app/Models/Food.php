@@ -19,4 +19,8 @@ class Food extends Model
         'food_name',
         'status',
     ]);
+
+    public function foodproperties(){
+        return $this->hasOne('App\Models\FoodProperties');
+    }
 }

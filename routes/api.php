@@ -95,6 +95,8 @@ Route::middleware('auth:sanctum')->get('/v1/food_properties', [FoodPropertiesCon
 
 Route::middleware('auth:sanctum')->get('/v1/food_properties/show_active', [FoodPropertiesController::class, 'show_active']);
 
+Route::middleware('auth:sanctum')->get('/v1/food_properties/food/{id}', [FoodPropertiesController::class, 'show_food']);
+
 Route::middleware('auth:sanctum')->get('/v1/food_properties/{id}', [FoodPropertiesController::class, 'show']);
 
 Route::middleware('auth:sanctum')->post('/v1/food_properties',[FoodPropertiesController::class, 'create']);
@@ -109,6 +111,8 @@ use App\Http\Controllers\DailyLimitController;
 Route::middleware('auth:sanctum')->get('/v1/daily_limit', [DailyLimitController::class, 'index']);
 
 Route::middleware('auth:sanctum')->get('/v1/daily_limit/show_active', [DailyLimitController::class, 'show_active']);
+
+Route::middleware('auth:sanctum')->get('/v1/daily_limit/user/{id}', [DailyLimitController::class, 'show_user']);
 
 Route::middleware('auth:sanctum')->get('/v1/daily_limit/{id}', [DailyLimitController::class, 'show']);
 

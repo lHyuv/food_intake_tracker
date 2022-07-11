@@ -52,7 +52,7 @@
                                     <option value="{{$f->id}}">{{$f->food_name}}</option>
                         @endforeach
                         </select>
-
+                            
                         <label>Property <sub> e.g. Vitamin</sub></label>
                         <input type="text" name = "property" id = "property" class = "form-control">
 
@@ -130,12 +130,59 @@
                 <div class="card-header">View Results</div>
 
                 <div class="card-body">
-
+                <div class = "row">
+                <div class = "col-md-7">
                 <canvas class="chart" id="chart-1" style="min-height: 250px; height: 350px; max-height: 350px; max-width: 100%;"></canvas>
+                </div>
+                <div class = "col-md-5">
+                            <!---->
+ 
+                    <label>Vitamin A</label>
+                    <div class="progress mb-3">
 
+                      <div id = 'vitamin_a_progress' class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><span id = "vitamin_a_text">0/0</span></div>
+                    </div>
+                    <label>Vitamin C</label>
+                    <div class="progress mb-3">
+
+                      <div id = 'vitamin_c_progress' class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><span id = "vitamin_c_text">0/0</span></div>
+                    </div>
+                    <label>Vitamin D</label>
+                    <div class="progress mb-3">
+
+                      <div id = 'vitamin_d_progress' class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><span id = "vitamin_d_text">0/0</span></div>
+                    </div>
+                    <label>Vitamin E</label>
+                    <div class="progress mb-3">
+
+                      <div id = 'vitamin_e_progress' class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><span id = "vitamin_e_text">0/0</span></div>
+                    </div>
+                    <label>Protein</label>
+                    <div class="progress mb-3">
+
+                      <div id = 'protein_progress' class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><span id = "protein_text">0/0</span></div>
+                    </div>
+                    <label>Fat</label>
+                    <div class="progress mb-3">
+
+                      <div id = 'fat_progress' class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><span id = "fat_text">0/0</span></div>
+                    </div>
+                    <label>Salt</label>
+                    <div class="progress mb-3">
+
+                      <div id = 'salt_progress' class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><span id = "salt_text">0/0</span></div>
+                    </div>
+                    <label>Sugar</label>
+                    <div class="progress mb-3">
+
+                      <div id = 'sugar_progress' class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><span id = "sugar_text">0/0</span></div>
+                    </div>
+                 
+                </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <!--View Results:end--> 
     <div class="row justify-content-center mt-3" id = "add_intake">

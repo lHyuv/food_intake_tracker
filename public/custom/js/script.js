@@ -1,7 +1,10 @@
 let global_ctr = 0;
 let tr = 'tr';
 const showElement = (type, value, mode) =>{
+ 
     let selector = "";
+
+    $('input').val('');
     if(type == "id"){
         selector = "#";
     }else if(type == "class"){
@@ -35,6 +38,30 @@ const submitForm = (url,method, data, action) =>{
     })
 };
 
-const appendEl = (el, code) =>{
-    $(el).append(code);
-}
+
+
+const submitIntake = () =>{
+
+    $('#intake_table tbody').find('tr').each((i,val)=>{
+
+        submitForm('api/v1/intakes','POST',{
+            'user_id' : sessionStorage.getItem('user_id'),
+            'serving' : $(val).find('td').find('input').val(),
+            'food_id' : $(val).find('td').find('select').val()
+        }, ()=>{
+         
+        })
+    });
+
+
+   $('#intake_table tbody').find('tr').each((i,val)=>{
+        if(i != 0){
+            $(val).find('td').remove();
+        }
+        
+      
+    });
+    $('input').val('');
+    alert("Submitted!");
+
+};

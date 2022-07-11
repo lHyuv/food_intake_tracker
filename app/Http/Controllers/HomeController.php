@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Food;
+use App\Models\Intake;
 
 class HomeController extends Controller
 {
@@ -25,8 +26,10 @@ class HomeController extends Controller
     public function index()
     {
         $foods = Food::where('status','Active')->get();
+        $intakes = Intake::where('status','Active')->get();
         return view('home',[
             'foods' => $foods,
+            'intakes' => $intakes,
         ]);
     }
 }

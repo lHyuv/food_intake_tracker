@@ -89,5 +89,16 @@ class IntakeController extends Controller
         ];
     }
 
+    public function show_by_user($id){
+        $data = Intake::with([
+            'foods',
+            'users',
+         ])->where('user_id',$id)->where('status','Active');
+
+        return [
+            'message' => 'Successfully retrieved',
+            'data' => $data
+        ];
+    }
 
 }

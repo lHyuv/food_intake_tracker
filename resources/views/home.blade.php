@@ -26,6 +26,9 @@
                                 alert('Submitted!');
                             }
                             );
+                            //
+                            showElement('','.row.justify-content-center.mt-3','none');
+                            showElement('id','add_intake','flex');
                         "
                         >Submit</button>
                 </div>
@@ -43,7 +46,7 @@
 
              
                         <label>Food Name</label>
-                        <select name="" id="" class = "form-control">
+                        <select name="" id="" class = "form-control" required>
                         @foreach($foods as $f)
                                     <option value="{{$f->id}}">{{$f->food_name}}</option>
                         @endforeach
@@ -78,15 +81,19 @@
                                     Amount
                                 </th>
                                 <th>
-                                    Intake
-                                </th>
-                                <th>
-                                    Date
+                                    Created At
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($intakes as $i)
+                                <tr>
+                                    <td> {{ $i->foods->pluck('food_name')[0]}} </td>
+                                    <td> {{$i->serving}} kg </td>
+                                    <td> {{$i->created_at->diffForHumans()}}</td>
+                                </tr>
 
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -118,17 +125,17 @@
 
                 <div class="card-body">
                     <button class = "btn btn-primary"
-                    onclick = '$("#first_row").append( 
+                    onclick = 'global_ctr++; $("#first_row").append( 
                     `<tr>
                                 <td>
-                                    <select name="food_id" id="intake_food_id_${global_ctr}" class = "form-control">
+                                    <select required name="food_id" id="intake_food_id_${global_ctr}" class = "form-control">
                                     @foreach($foods as $f)
                                     <option value="{{$f->id}}">{{$f->food_name}}</option>
                                     @endforeach
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="number" name = "serving" id = "intake_serving_${global_ctr}" class = "form-control">
+                                    <input required type="number" name = "serving" id = "intake_serving_${global_ctr}" class = "form-control">
                                 </td>
                                 <td>
                                 <button class = "btn"
@@ -139,14 +146,14 @@
                     "`);'
                     >Add Intake <i class = "fas fa-plus"></i> </button>
 
-                    <table class = "table table-striped">
+                    <table class = "table table-striped" id = "intake_table">
                         <thead>
                             <tr>
                                 <th width = "50%">
                                     Food
                                 </th>
                                 <th width = "30%">
-                                    Serving
+                                    Serving <small>(in kg) </small>
                                 </th>
                                 <th width = "20%">
                                     &nbsp;
@@ -156,14 +163,14 @@
                         <tbody id = "first_row">
                             <tr >
                                 <td>
-                                    <select name="food_id" id="intake_food_id_" class = "form-control">
+                                    <select required name="food_id" id="intake_food_id_" class = "form-control">
                                     @foreach($foods as $f)
                                     <option value="{{$f->id}}">{{$f->food_name}}</option>
                                     @endforeach
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="number" name = "serving" id = "intake_serving_" class = "form-control">
+                                    <input required type="number" name = "serving" id = "intake_serving_" class = "form-control">
                                 </td>
                                 <td>
                                     &nbsp;
@@ -172,7 +179,7 @@
                         </tbody>
                     </table>
                     <button class = "btn btn-primary mt-2" type="submit" 
-                    onclick = ""
+                    onclick = "submitIntake();"
                     >Submit</button>
                 </div>
             </div>

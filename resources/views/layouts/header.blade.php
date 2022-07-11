@@ -59,6 +59,17 @@
                                 <a id="navbarDropdown" class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre
                                 onclick="
                                 showElement('','.row.justify-content-center.mt-3','none');
+                                showElement('id','add_intake','flex');
+                                "
+                                >
+                                Add Intake
+                                </a>
+
+                            </li>
+                        <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre
+                                onclick="
+                                showElement('','.row.justify-content-center.mt-3','none');
                                 showElement('id','add_food','flex');
                                 "
                                 >

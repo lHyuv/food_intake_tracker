@@ -92,3 +92,125 @@ const loadFoods = (baseURL) =>{
         }
     })
 };
+
+//
+const createChart = (baseURL) =>{
+
+    let foods = new Array();
+    let servings = new Array();
+    let property = new Array();
+    let property_values = new Array();
+    
+    $.ajax({
+        url: baseURL + '/api/v1/intakes/user/' + sessionStorage.getItem('user_id'),
+        method: 'GET',
+        headers: {
+            'Authorization' : `Bearer ${sessionStorage.getItem('token')}`
+        },
+        success: (data)=>{
+           
+            data.data.map((val)=>{
+            
+                if(foods.includes(val.food_id)){
+                    servings[foods.indexOf(val.food_id)] = 
+                    parseFloat(servings[foods.indexOf(val.food_id)]) + parseFloat((val.serving));
+                }else{
+                    foods.push(val.food_id);
+                    servings.push(val.serving);
+                }
+            
+              
+            });
+
+            foods.map((val,i)=>{
+                $.ajax({
+                    url: baseURL + '/api/v1/food_properties',
+                    method: 'GET',
+                    headers: {
+                        'Authorization' : `Bearer ${sessionStorage.getItem('token')}`
+                    },
+                    success: (data2)=>{
+                     
+                        data2.data.map((val2,k)=>{
+      
+                            if(val2.food_id == val){
+                             
+
+
+                                if(property.includes(val2.property)){
+                                    property_values[property.indexOf(val2.property)] =
+                                    parseFloat(property_values[property.indexOf(val2.property)] + 
+                                    (servings[foods.indexOf(val)] * (val2.amount)));
+                                 
+                                }else{
+                                    property.push(val2.property);
+                                    property_values.push(
+                                    (servings[foods.indexOf(val)] * (val2.amount))); 
+                                }
+                            }
+                        });
+                    
+                        if(i == foods.length - 1){
+                        
+// graph chart
+let graphChartCanvas = $('#chart-1').get(0).getContext('2d')
+            
+            
+let graphChartData = {
+    labels: property,
+    datasets: [
+    {
+        label: 'Vitamins and Minerals based on Intake',
+        fill: false,
+        borderWidth: 2,
+        lineTension: 0,
+        spanGaps: true,
+        borderColor: 'rgba(54, 162, 235)',//'gray',
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        pointRadius: 3,
+
+        data: property_values
+    }
+    ]
+}
+
+let graphChartOptions = {
+    maintainAspectRatio: false,
+    responsive: true,
+    legend: {
+    display: false
+    },
+    scales: {
+    y: {  
+        min: 0,
+        suggestedMax: 10,
+        step: 1,
+
+    },
+    x: {  
+        min: 0,
+        
+    },
+
+    }
+}
+
+
+let graphChart = new Chart(graphChartCanvas, { 
+    type: 'bar', //'line',
+    data: graphChartData,
+    options: graphChartOptions
+})
+//chart:end
+                        }
+                    }
+                })
+            })
+
+            console.log(property);
+            console.log(property_values);
+        }
+
+    });
+ 
+};

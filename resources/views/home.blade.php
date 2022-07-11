@@ -131,7 +131,7 @@
 
                 <div class="card-body">
 
-              
+                <canvas class="chart" id="chart-1" style="min-height: 250px; height: 350px; max-height: 350px; max-width: 100%;"></canvas>
 
                 </div>
             </div>

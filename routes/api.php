@@ -63,7 +63,7 @@ Route::middleware('auth:sanctum')->get('/v1/intakes', [IntakeController::class, 
 
 Route::middleware('auth:sanctum')->get('/v1/intakes/show_active', [IntakeController::class, 'show_active']);
 
-Route::middleware('auth:sanctum')->get('/v1/intakes/user/{id}', [IntakeController::class, 'show_by_user']);
+Route::middleware('auth:sanctum')->get('/v1/intakes/user/{id}', [IntakeController::class, 'show_user']);
 
 Route::middleware('auth:sanctum')->get('/v1/intakes/{id}', [IntakeController::class, 'show']);
 

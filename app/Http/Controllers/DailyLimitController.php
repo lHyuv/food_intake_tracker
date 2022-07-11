@@ -50,8 +50,6 @@ class DailyLimitController extends Controller
         $validator = Validator::make($request->all(), [
             //
             'user_id' => ['required','string', 'max:255'],
-            'foodproperty_id' => ['required','string', 'max:255'],
-            'value' => ['required'],
             //
         ]);
 

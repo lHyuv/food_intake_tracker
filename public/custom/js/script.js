@@ -1,5 +1,20 @@
 let global_ctr = 0;
 let tr = 'tr';
+
+const notification = (type, title, message) => {
+
+	toastr.options = {
+		preventDuplicates: true,
+		preventOpenDuplicates: true,
+		positionClass: 'toast-top-center',
+        closeButton: true,
+        newestOnTop: true,
+        progressBar: true,
+	};
+
+	return toastr[type](message, title);
+};
+
 const showElement = (type, value, mode) =>{
  
     let selector = "";
@@ -31,9 +46,11 @@ const submitForm = (url,method, data, action) =>{
         success: (data)=>{
             console.log(data);
             action();
+            notification('success','','Submitted!');
         },
         error: ({responseJson})=>{
             console.log(responseJson);
+            notification('error','','Something went wrong');
         }
     })
 };
@@ -62,7 +79,7 @@ const submitIntake = () =>{
       
     });
     $('input').val('');
-    alert("Submitted!");
+    notification('success','','Submitted!');
 
 };
 
@@ -207,8 +224,7 @@ let graphChart = new Chart(graphChartCanvas, {
                 })
             })
 
-            console.log(property);
-            console.log(property_values);
+ 
         }
 
     });

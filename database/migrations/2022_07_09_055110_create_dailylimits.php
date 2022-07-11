@@ -19,8 +19,15 @@ class CreateDailylimits extends Migration
             $table->primary('id');
             //
             $table->foreignUuid('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignUuid('foodproperty_id')->constrained('food_properties')->onDelete('cascade')->onUpdate('cascade');
-            $table->float('value');
+            $table->float('vitamin_a')->nullable();
+            $table->float('vitamin_c')->nullable();
+            $table->float('vitamin_d')->nullable();
+            $table->float('vitamin_e')->nullable();
+            $table->float('salt')->nullable();
+            $table->float('sugar')->nullable();
+            $table->float('fat')->nullable();
+            $table->float('protein')->nullable();
+            $table->float('calorie')->nullable();
             //
             $table->string('status')->default('Active');
             $table->timestamps();

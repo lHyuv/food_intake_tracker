@@ -18,8 +18,15 @@ class DailyLimit extends Model
     protected $fillable = ([
 
         'user_id',
-        'foodproperty_id',
-        'value',
+        'vitamin_a',
+        'vitamin_c',
+        'vitamin_d',
+        'vitamin_e',
+        'salt',
+        'sugar',
+        'fat',
+        'protein',
+        'calorie',
         'status',
 
     ]);

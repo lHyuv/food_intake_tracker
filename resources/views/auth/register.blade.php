@@ -124,6 +124,7 @@
                           
                             @foreach($healthissues as $hi)
                             <input type="checkbox"  id = "healthissue_id_{{ $hi->id }}" name = "healthissues[{{$hi->id}}]" value = "{{ $hi->id }}"> &nbsp; <small>  {{ $hi->name }}</small><br>
+                            <input type="hidden" name = "healthissues_name[{{ $hi->name }}]" value = "{{ $hi->name }}"/>
                             @endforeach
                             </div>
                         </div>

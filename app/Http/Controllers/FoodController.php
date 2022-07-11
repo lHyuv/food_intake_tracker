@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Food;
+use App\Models\FoodProperties;
 use Validator;
 
 class FoodController extends Controller
@@ -49,6 +50,33 @@ class FoodController extends Controller
         }
 
         $data =  Food::create($request->all());
+        //
+        FoodProperties::create([
+            'property_name' => 'VitaminA',
+        ]);
+        FoodProperties::create([
+            'property_name' => 'VitaminC',
+        ]);
+        FoodProperties::create([
+            'property_name' => 'VitaminD',
+        ]);
+        FoodProperties::create([
+            'property_name' => 'VitaminE',
+        ]);
+        FoodProperties::create([
+            'property_name' => 'Salt',
+        ]);
+        FoodProperties::create([
+            'property_name' => 'Sugar',
+        ]);
+        FoodProperties::create([
+            'property_name' => 'Fat',
+        ]);
+        FoodProperties::create([
+            'property_name' => 'Protein',
+        ]);
+        
+        //
         return [
             'message' => 'Successfully created',
             'data' => $data

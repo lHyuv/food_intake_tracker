@@ -23,7 +23,7 @@
                             },
                           
                             function(){
-                                alert('Submitted!');
+                                notification('success','','Submitted!');
                             }
                             );
                             //
@@ -70,7 +70,7 @@
                             },
                           
                             function(){
-                                alert('Submitted!');
+                                notification('success','','Submitted!');
                             }
                             );
                             //

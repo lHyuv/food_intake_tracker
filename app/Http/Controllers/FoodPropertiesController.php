@@ -48,6 +48,7 @@ class FoodPropertiesController extends Controller
             //
             'property' => ['required','string', 'max:255'],
             'food_id' => ['required','string', 'max:255'],
+            'amount' => ['required'],
             //
         ]);
 

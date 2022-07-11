@@ -20,6 +20,7 @@ class CreateFoodproperties extends Migration
             //
             $table->string('property');
             $table->foreignUuid('food_id')->constrained('foods')->onDelete('cascade')->onUpdate('cascade');
+            $table->float('amount');
             //
             $table->string('status')->default('Active');
             $table->timestamps();

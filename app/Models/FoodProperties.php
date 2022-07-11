@@ -18,6 +18,7 @@ class FoodProperties extends Model
     protected $fillable = ([
         'property',
         'food_id',
+        'amount',
         'status',
     ]);
 

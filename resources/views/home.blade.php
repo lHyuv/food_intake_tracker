@@ -29,6 +29,7 @@
                             //
                             showElement('','.row.justify-content-center.mt-3','none');
                             showElement('id','add_intake','flex');
+                            loadFoods('{{ URL::to('/') }}');
                         "
                         >Submit</button>
                 </div>
@@ -46,16 +47,37 @@
 
              
                         <label>Food Name</label>
-                        <select name="" id="" class = "form-control" required>
+                        <select name="food_id" id="set_food" class = "form-control" required>
                         @foreach($foods as $f)
                                     <option value="{{$f->id}}">{{$f->food_name}}</option>
                         @endforeach
                         </select>
 
                         <label>Property <sub> e.g. Vitamin</sub></label>
-                        <input type="text" name = "" id = "" class = "form-control">
+                        <input type="text" name = "property" id = "property" class = "form-control">
+
+                        <label>Amount</label>
+                        <input type="number" name = "amount" id = "amount" step = "0.01" class = "form-control">
+
                         <button class = "btn btn-primary mt-2" type="submit" 
-                        onclick = ""
+                        onclick = "                        submitForm(
+                            '{{ URL::to('/') }}/api/v1/food_properties',
+                            'POST', 
+                            {
+                                'food_id' :   $('#set_food').val(),
+                                'property' :   $('#property').val(),
+                                'amount' : $('#amount').val(),
+                            },
+                          
+                            function(){
+                                alert('Submitted!');
+                            }
+                            );
+                            //
+                            showElement('','.row.justify-content-center.mt-3','none');
+                            showElement('id','add_intake','flex');
+                            loadFoods('{{ URL::to('/') }}');
+                        "
                         >Submit</button>
                 </div>
             </div>

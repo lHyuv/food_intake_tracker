@@ -65,3 +65,30 @@ const submitIntake = () =>{
     alert("Submitted!");
 
 };
+
+const loadFoods = (baseURL) =>{
+
+    $.ajax({
+        url: baseURL + '/api/v1/foods',
+        method: 'GET',
+        headers: {
+            'Authorization' : `Bearer ${sessionStorage.getItem('token')}`
+        },
+        success: (data)=>{
+         //   let code = ``;
+        $('select').find('option').each((i,val)=>{
+            $(val).remove();
+        })
+         let code = `<option>BLAHBLAH</option>`;
+            data.data.map((val)=>{
+                code += `<option id = '${val.id}'>${val.food_name}</option>`;
+            }).join("");
+            $('#intake_food_id_').append(code);
+            $('#set_food').append(code);
+            
+        },
+        error: ({responseJson})=>{
+         //   console.log(responseJson);
+        }
+    })
+};

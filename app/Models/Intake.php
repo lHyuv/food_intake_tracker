@@ -19,7 +19,19 @@ class Intake extends Model
         'user_id',
         'food_id',
         'serving',
+        'ext_food_id',
+        'ext_food_name',
+        'type',
         'status',
+        //
+        'ext_vitamin_a',
+        'ext_vitamin_c',
+        'ext_vitamin_d',
+        'ext_vitamin_e',
+        'ext_fat',
+        'ext_protein',
+        'ext_salt',
+        'ext_sugar',
 
     ]);
 

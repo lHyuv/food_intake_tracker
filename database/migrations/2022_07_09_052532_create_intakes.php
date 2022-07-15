@@ -19,9 +19,20 @@ class CreateIntakes extends Migration
             $table->primary('id');
             //
             $table->foreignUuid('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignUuid('food_id')->constrained('foods')->onDelete('cascade')->onUpdate('cascade'); 
+            $table->foreignUuid('food_id')->nullable()->constrained('foods')->onDelete('cascade')->onUpdate('cascade'); 
             $table->float('serving');
-             
+            $table->string('ext_food_id')->nullable();
+            $table->text('ext_food_name')->nullable();
+            $table->string('type');
+            //
+            $table->string('ext_vitamin_a')->nullable();
+            $table->string('ext_vitamin_c')->nullable();
+            $table->string('ext_vitamin_d')->nullable();
+            $table->string('ext_vitamin_e')->nullable();
+            $table->string('ext_fat')->nullable();
+            $table->string('ext_protein')->nullable();
+            $table->string('ext_salt')->nullable();
+            $table->string('ext_sugar')->nullable();
              //
              $table->string('status')->default('Active');
              $table->timestamps();

@@ -46,24 +46,45 @@ class IntakeController extends Controller
     }
 
     public function create(Request $request){
+  
+            $validator = Validator::make($request->all(), [
+                //
+                'user_id' => ['required','string', 'max:255'],
+                'serving' => ['required'],
+     
+                //
+            ]);
+    
+            if($validator->fails()){
+                return ['message' => [$validator->errors()]];       
+            }
+            
+            //$data =  Intake::create($request->all());
+            $data =  Intake::create([
+                'user_id' => $request['user_id'],
+                'food_id' => $request['food_id'],
+                'serving' => $request['serving'],
+                'type' => 'Local',
+                'ext_food_id' => $request['ext_food_id'],
+                'ext_food_name' => $request['ext_food_name'],
+                'ext_vitamin_a' => $request['ext_vitamin_a'],
+                'ext_vitamin_c'=> $request['ext_vitamin_c'],
+                'ext_vitamin_d'=> $request['ext_vitamin_d'],
+                'ext_vitamin_e'=> $request['ext_vitamin_e'],
+                'ext_fat'=> $request['ext_fat'],
+                'ext_protein'=> $request['ext_protein'],
+                'ext_salt'=> $request['ext_salt'],
+                'ext_sugar'=> $request['ext_sugar'],
+            ]);
+            
+         
+
+            return [
+                'message' => 'Successfully created',
+                'data' => $data
+            ];
         
-        $validator = Validator::make($request->all(), [
-            //
-            'user_id' => ['required','string', 'max:255'],
-            'food_id' => ['required','string', 'max:255'],
-            'serving' => ['required'],
-            //
-        ]);
 
-        if($validator->fails()){
-            return ['message' => [$validator->errors()]];       
-        }
-
-        $data =  Intake::create($request->all());
-        return [
-            'message' => 'Successfully created',
-            'data' => $data
-        ];
     }
 
     public function update(Request $request, $id){

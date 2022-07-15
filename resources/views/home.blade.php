@@ -49,7 +49,7 @@
                         <label>Food Name</label>
                         <select name="food_id" id="set_food" class = "form-control" required>
                         @foreach($foods as $f)
-                                    <option value="{{$f->id}}">{{$f->food_name}}</option>
+                                    <option  class = "local_food" value="{{$f->id}}">{{$f->food_name}}</option>
                         @endforeach
                         </select>
                             
@@ -110,7 +110,11 @@
                         <tbody>
                             @foreach($intakes as $i)
                                 <tr>
+                                    @if(isset( $i->foods))
                                     <td> {{ $i->foods->pluck('food_name')[0]}} </td>
+                                    @else
+                                    <td> {{ $i->ext_food_name}} </td>
+                                    @endif
                                     <td> {{$i->serving}} kg </td>
                                     <td> {{$i->created_at->diffForHumans()}}</td>
                                 </tr>
@@ -125,16 +129,16 @@
     <!--View Intake:end--> 
         <!--View Results--> 
         <div class="row justify-content-center mt-3" id = "view_results" style = "display:none;">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">View Results</div>
 
                 <div class="card-body">
                 <div class = "row">
-                <div class = "col-md-7">
+                <div class = "col-md-8">
                 <canvas class="chart" id="chart-1" style="min-height: 250px; height: 350px; max-height: 350px; max-width: 100%;"></canvas>
                 </div>
-                <div class = "col-md-5">
+                <div class = "col-md-4">
                             <!---->
  
                     <label>Vitamin A</label>
@@ -199,7 +203,7 @@
                                 <td>
                                     <select required name="food_id" id="intake_food_id_${global_ctr}" class = "form-control">
                                     @foreach($foods as $f)
-                                    <option value="{{$f->id}}">{{$f->food_name}}</option>
+                                    <option class = "local_food" value="{{$f->id}}">{{$f->food_name}}</option>
                                     @endforeach
                                     </select>
                                 </td>
@@ -234,12 +238,12 @@
                                 <td>
                                     <select required name="food_id" id="intake_food_id_" class = "form-control">
                                     @foreach($foods as $f)
-                                    <option value="{{$f->id}}">{{$f->food_name}}</option>
+                                    <option   value="{{$f->id}}" class = "local_food">{{$f->food_name}}</option>
                                     @endforeach
                                     </select>
                                 </td>
                                 <td>
-                                    <input required type="number" name = "serving" id = "intake_serving_" class = "form-control">
+                                    <input   required type="number" name = "serving" id = "intake_serving_" class = "form-control">
                                 </td>
                                 <td>
                                     &nbsp;
@@ -258,6 +262,12 @@
 <script>
   sessionStorage.setItem('token', '{{ session("token") }}');
   sessionStorage.setItem('user_id', '{{ session("user_id") }}');
+//
+let ctr = 0;
+while(ctr <= 50){
+    loadFromExtAPI("{{env('EXT_API_URL');}}","{{env('EXT_API_KEY');}}", ctr);
+    ctr++;
+}
 
 </script>
 @endsection

@@ -163,6 +163,7 @@ const loadFoods = (baseURL) =>{
             let unsafe = ``;
             let safe = ``;
             let ctr = 0;
+            let foodName = new Array();
                 data.data.map((val)=>{
           
                
@@ -234,13 +235,17 @@ const loadFoods = (baseURL) =>{
 
 
                     }).join("");
-                    if(check == 1){
-                        //&#xf071
-                       unsafe += `<option class = "local_food text-danger" id = '${val.id}' data-icon = 'fa-skull-crossbones' > ${val.food_name} </option>`;
-                    }else{
-                     
-                        safe += `<option class = "local_food" id = '${val.id}'>${val.food_name}</option>`;
-                    }
+
+                    if(!foodName.includes(val.description)){
+                        if(check == 1){
+                            //&#xf071
+                            unsafe += `<option class = "local_food text-danger" id = '${val.id}' data-icon = 'fa-skull-crossbones' > ${val.food_name} </option>`;
+                        }else{
+                            safe += `<option class = "local_food" id = '${val.id}'>${val.food_name}</option>`;
+                        }
+                        foodName.push(val.description);
+                        }
+
                     }else{
                         safe += `<option class = "local_food" id = '${val.id}'>${val.food_name}</option>`;
                     }
@@ -248,7 +253,13 @@ const loadFoods = (baseURL) =>{
 
                 //
                 if(ctr + 1 == data.data.length){
+                    if(unsafe.length == 0){
+                        code = `<optgroup label = 'Safe'>` + safe + `</optgroup>`; 
+                    }else if(safe.length == 0){
+                         code = `<optgroup label = 'Unsafe'>` + unsafe + `</optgroup>`;
+                    }else{
                     code = `<optgroup label = 'Safe'>` + safe + `</optgroup><optgroup label = 'Unsafe'>` + unsafe + `</optgroup>`
+                    }
                    
                     $('#intake_food_id_').append(code);
                     $('#set_food').append(code);
@@ -298,7 +309,8 @@ const createChart = (baseURL) =>{
                     
                     if(foods.includes(val.food_id)){
                         servings[foods.indexOf(val.food_id)] = 
-                        parseFloat(servings[foods.indexOf(val.food_id)]) + parseFloat((val.serving));
+                       // parseFloat(servings[foods.indexOf(val.food_id)]) + parseFloat((val.serving));
+                       parseFloat(servings[foods.indexOf(val.food_id)]) + 1;
                     }else{
                         foods.push(val.food_id);
                         servings.push(val.serving);
@@ -308,21 +320,21 @@ const createChart = (baseURL) =>{
                     foods.push(val.ext_food_name);
                     servings.push(val.serving);
 
-                            property_values[0] += val.ext_vitamin_a ? parseFloat(val.ext_vitamin_a * val.serving) : 0;
+                            property_values[0] += val.ext_vitamin_a ? 1: 0; //parseFloat(val.ext_vitamin_a * val.serving) : 0;
                             
-                            property_values[1] += val.ext_vitamin_c ? parseFloat(val.ext_vitamin_c * val.serving) : 0;
+                            property_values[1] += val.ext_vitamin_c ? 1: 0; //parseFloat(val.ext_vitamin_c * val.serving) : 0;
                         
-                            property_values[2] += val.ext_vitamin_d ? parseFloat(val.ext_vitamin_d * val.serving) : 0;
+                            property_values[2] += val.ext_vitamin_d ? 1: 0; //parseFloat(val.ext_vitamin_d * val.serving) : 0;
                             
-                            property_values[3] += val.ext_vitamin_e ? parseFloat(val.ext_vitamin_e * val.serving) : 0;
+                            property_values[3] += val.ext_vitamin_e ? 1: 0; //parseFloat(val.ext_vitamin_e * val.serving) : 0;
                 
-                            property_values[4] += val.ext_salt ? parseFloat(val.ext_salt * val.serving) : 0;
+                            property_values[4] += val.ext_salt ? 1: 0; //parseFloat(val.ext_salt * val.serving) : 0;
                     
-                            property_values[5] += val.ext_sugar ? parseFloat(val.ext_sugar * val.serving) : 0;
+                            property_values[5] += val.ext_sugar ? 1: 0; //parseFloat(val.ext_sugar * val.serving) : 0;
                     
-                            property_values[6] += val.ext_fat ? parseFloat(val.ext_fat * val.serving) : 0;
+                            property_values[6] += val.ext_fat ? 1: 0; //parseFloat(val.ext_fat * val.serving) : 0;
                 
-                            property_values[7] += val.ext_protein ? parseFloat(val.ext_protein * val.serving) : 0;
+                            property_values[7] += val.ext_protein ? 1: 0; //parseFloat(val.ext_protein * val.serving) : 0;
 
                            
                         
@@ -380,7 +392,7 @@ let graphChartData = {
     labels: property,
     datasets: [
     {
-        label: 'Vitamins and Minerals based on Intake',
+        label: 'Vitamins and Minerals (servings) based on Daily Intake',
         fill: false,
         borderWidth: 2,
         lineTension: 0,
@@ -715,6 +727,7 @@ const loadFromExtAPI = (extAPIURL, extAPIKEY, ctr, baseURL)  =>{
                     let safe = ``;
                     let unsafe = ``;
 
+                    let foodName = new Array();
                     data.map((val)=>{
                   
               
@@ -770,21 +783,27 @@ const loadFromExtAPI = (extAPIURL, extAPIKEY, ctr, baseURL)  =>{
                                     }
                                 }
                             }
-
+                            if(!foodName.includes(val.description)){
                             if(check == 1){
                                 //&#xf071
                                 unsafe += `<option class = 'external_food text-danger' value = '${JSON.stringify(val)}' data-icon = 'fa-skull-crossbones' >${val.description} </option>`;
                             }else{
-                                safe += `<option class = 'external_food' value = '${JSON.stringify(val)}'>${val.description}</option>`;
+                               safe += `<option class = 'external_food' value = '${JSON.stringify(val)}'>${val.description}</option>`;
+                            }
+                            foodName.push(val.description);
                             }
                         });
                         
 
                      
                     }).join("");
-
+                    if(unsafe.length == 0){
+                        code = `<optgroup label = 'Safe'>` + safe + `</optgroup>`; 
+                    }else if(safe.length == 0){
+                         code = `<optgroup label = 'Unsafe'>` + unsafe + `</optgroup>`;
+                    }else{
                     code = `<optgroup label = 'Safe'>` + safe + `</optgroup><optgroup label = 'Unsafe'>` + unsafe + `</optgroup>`
-
+                    }
                     $('#intake_food_id_').append(code);
                     $('#set_food').append(code);
                     

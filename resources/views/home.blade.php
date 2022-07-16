@@ -93,7 +93,7 @@
                 <div class="card-body">
 
               
-                    <table class = "table table-striped">
+                    <table class = "table table-striped" id = 'intake_history_table'>
                         <thead>
                             <tr>
                                 <th>
@@ -269,7 +269,7 @@
   sessionStorage.setItem('token', '{{ session("token") }}');
   sessionStorage.setItem('user_id', '{{ session("user_id") }}');
 //
-let checker = false;
+
 Swal.fire({
                     text: 'Loading...',
                     showConfirmButton: false,
@@ -280,7 +280,7 @@ Swal.fire({
                         loadFoods('{{ URL::to('/') }}');
                         
                         let ctr = 0;
-                        while(ctr <= 1){
+                        while(ctr <= 30){
                             loadFromExtAPI("{{env('EXT_API_URL');}}","{{env('EXT_API_KEY');}}", ctr,'{{ URL::to('/') }}' );
                             ctr++;
                         }
@@ -297,6 +297,7 @@ Swal.fire({
                            templateResult: formatSelect2,
      });
 })
+
 
 </script>
 <style>

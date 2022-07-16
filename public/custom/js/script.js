@@ -44,18 +44,26 @@ const submitForm = (url,method, data, action) =>{
             'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
         },
         success: (data)=>{
-          //  console.log(data);
+            console.log(data);
             action();
             notification('success','','Submitted!');
         },
         error: (responseJson)=>{
-         //   console.log(responseJson);
+            console.log(responseJson);
             notification('error','','Something went wrong');
         }
     })
 };
 
 
+const formatSelect2 = (icon) =>{
+ 
+
+    if(icon && icon.element){
+        return $('<span><i class="fas ' + $(icon.element).data('icon') + '"></i> ' + icon.text + '</span>');
+    }
+  
+};
 
 const submitIntake = () =>{
 
@@ -128,33 +136,142 @@ const submitIntake = () =>{
 
 };
 
-const loadFoods = (baseURL, user_id) =>{
+const loadFoods = (baseURL) =>{
     
     $.ajax({
-        url: baseURL + '/api/v1/foods',
+        url:  baseURL + '/api/v1/daily_limit/user/' + sessionStorage.getItem('user_id'),
         method: 'GET',
         headers: {
-            'Authorization' : `Bearer ${sessionStorage.getItem('token')}`
+            'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
         },
-        success: (data)=>{
-         //   let code = ``;
-        $('select').find('option').each((i,val)=>{
-            $(val).remove();
-        })
-         let code = ``;
-            data.data.map((val)=>{
-                code += `<option class = "local_food" id = '${val.id}'>${val.food_name}</option>`;
-            }).join("");
-            $('#intake_food_id_').append(code);
-            $('#set_food').append(code);
-            
-            //Food Constraint Check
 
-            //Food Constraint Check:end
-        },
-        error: ({responseJson})=>{
-         //   console.log(responseJson);
-        }
+        success: (data0)=>{ 
+            //
+        $.ajax({
+            url: baseURL + '/api/v1/foods',
+            method: 'GET',
+            headers: {
+                'Authorization' : `Bearer ${sessionStorage.getItem('token')}`
+            },
+            success: (data)=>{
+                
+            //   let code = ``;
+            $('select').find('option').each((i,val)=>{
+                $(val).remove();
+            })
+            let code = ``;
+            let unsafe = ``;
+            let safe = ``;
+            let ctr = 0;
+                data.data.map((val)=>{
+          
+               
+                
+
+                //
+                $.ajax({
+                    url: baseURL + '/api/v1/food_properties/food/' + val.id,
+                    method: 'GET',
+                    headers: {
+                        'Authorization' : `Bearer ${sessionStorage.getItem('token')}`
+                    },
+                    success: (data2)=>{
+                    //Food Constraint Check
+                    let check = 0;
+
+                    if(typeof(data2.data) != 'undefined' && data2.data != null && data2.data.length > 0){
+                    data2.data.map((val2)=>{
+                   
+                        if(val2.property.includes('VitaminA') || val2.property.includes('Vitamin A')){
+                            if(data0.data.length > 0){
+                                if(parseFloat(val2.amount) > data0.data[0].vitamin_a){
+                                    check = 1;
+                                }
+                            }
+                        }else if(val2.property.includes('VitaminC') || val2.property.includes('Vitamin C')){
+                            if(data0.data.length > 0){
+                                if(parseFloat(val2.amount) > data0.data[0].vitamin_c){
+                                    check = 1;
+                                }
+                            }
+                        }else if(val2.property.includes('VitaminD') || val2.property.includes('Vitamin D')){
+                            if(data0.data.length > 0){
+                                if(parseFloat(val2.amount) > data0.data[0].vitamin_d){
+                                    check = 1;
+                                }
+                            }
+                        }else if(val2.property.includes('VitaminE') || val2.property.includes('Vitamin E')){
+                            if(data0.data.length > 0){
+                                if(parseFloat(val2.amount) > data0.data[0].vitamin_e){
+                                    check = 1;
+                                }
+                            }
+                        }else if(val2.property.includes('Salt')){
+                            if(data0.data.length > 0){
+                                if(parseFloat(val2.amount) > data0.data[0].salt){
+                                    check = 1;
+                                }
+                            }
+                        }else if(val2.property.includes('Sugar')){
+                            if(data0.data.length > 0){
+                                if(parseFloat(val2.amount) > data0.data[0].sugar){
+                                    check = 1;
+                                }
+                            }
+                        }else if(val2.property.includes('Fat')){
+                            if(data0.data.length > 0){
+                                if(parseFloat(val2.amount) > data0.data[0].fat){
+                                    check = 1;
+                                }
+                            }
+                        }else if(val2.property.includes('Protein')){
+                            if(data0.data.length > 0){
+                                if(parseFloat(val2.amount) > data0.data[0].protein){
+                                    check = 1;
+                                }
+                            }
+                        }
+
+
+                    }).join("");
+                    if(check == 1){
+                        //&#xf071
+                       unsafe += `<option class = "local_food text-danger" id = '${val.id}' data-icon = 'fa-skull-crossbones' > ${val.food_name} </option>`;
+                    }else{
+                     
+                        safe += `<option class = "local_food" id = '${val.id}'>${val.food_name}</option>`;
+                    }
+                    }else{
+                        safe += `<option class = "local_food" id = '${val.id}'>${val.food_name}</option>`;
+                    }
+                    //Food Constraint Check:end
+
+                //
+                if(ctr + 1 == data.data.length){
+                    code = `<optgroup label = 'Safe'>` + safe + `</optgroup><optgroup label = 'Unsafe'>` + unsafe + `</optgroup>`
+                   
+                    $('#intake_food_id_').append(code);
+                    $('#set_food').append(code);
+                    }
+                    ctr++;
+                    
+                    }
+                })
+
+
+            })
+
+            //
+
+
+            
+            },
+            error: ({responseJson})=>{
+            //   console.log(responseJson);
+            }
+        })
+    //
+    }
     })
 };
 
@@ -557,7 +674,7 @@ const setProgress = (baseURL) =>{
     })
 };
 
-const loadFromExtAPI = (extAPIURL, extAPIKEY, ctr)  =>{
+const loadFromExtAPI = (extAPIURL, extAPIKEY, ctr, baseURL)  =>{
     
     //External API Enpoint for Food List
     //External API -> Food Data Central API -> as of 2022
@@ -565,21 +682,109 @@ const loadFromExtAPI = (extAPIURL, extAPIKEY, ctr)  =>{
     let limit = 80;
    
     let  url = extAPIURL + `foods/list?pageSize=${limit}&pageNumber=${ctr}&api_key=` + extAPIKEY; //
+
+    $.ajax({
+        url:  baseURL + '/api/v1/daily_limit/user/' + sessionStorage.getItem('user_id'),
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+        },
+
+        success: (data0)=>{
+           
+       // console.log(data0);
+        //
         //AJAX
         $.ajax({
             url: url,
             method: 'GET',
+            /*
+            beforeSend: function(){
+                Swal.fire({
+                    text: 'Loading...',
+                    showConfirmButton: false,
+                    icon: 'info',
                 
-    
+                });
+            },
+            */
             success: (data)=>{
 
                 if(data.length > 0){
                     let code = ``;
-                    
+                    let safe = ``;
+                    let unsafe = ``;
+
                     data.map((val)=>{
- 
-                        code += `<option class = 'external_food' value = '${JSON.stringify(val)}' >${val.description}</option>`;
+                  
+              
+                        let check = 0;
+                    
+                        val.foodNutrients.map((val2)=>{
+                            if(val2.name.includes('Vitamin A')){
+                                if(data0.data.length > 0){
+                                    if(parseFloat(val2.amount) > data0.data[0].vitamin_a){
+                                        check = 1;
+                                    }
+                                }
+                            }else if(val2.name.includes('Vitamin C')){
+                                if(data0.data.length > 0){
+                                    if(parseFloat(val2.amount) > data0.data[0].vitamin_c){
+                                        check = 1;
+                                    }
+                                }
+                            }else if(val2.name.includes('Vitamin D')){
+                                if(data0.data.length > 0){
+                                    if(parseFloat(val2.amount) > data0.data[0].vitamin_d){
+                                        check = 1;
+                                    }
+                                }
+                            }else if(val2.name.includes('Vitamin E')){
+                                if(data0.data.length > 0){
+                                    if(parseFloat(val2.amount) > data0.data[0].vitamin_e){
+                                        check = 1;
+                                    }
+                                }
+                            }else if(val2.name.includes('Sodium')){
+                                if(data0.data.length > 0){
+                                    if(parseFloat(val2.amount) > data0.data[0].salt){
+                                        check = 1;
+                                    }
+                                }
+                            }else if(val2.name.includes('Sugar')){
+                                if(data0.data.length > 0){
+                                    if(parseFloat(val2.amount) > data0.data[0].sugar){
+                                        check = 1;
+                                    }
+                                }
+                            }else if(val2.name.includes('Lipid')){
+                                if(data0.data.length > 0){
+                                    if(parseFloat(val2.amount) > data0.data[0].fat){
+                                        check = 1;
+                                    }
+                                }
+                            }else if(val2.name.includes('Protein')){
+                                if(data0.data.length > 0){
+                                    if(parseFloat(val2.amount) > data0.data[0].protein){
+                                        check = 1;
+                                    }
+                                }
+                            }
+
+                            if(check == 1){
+                                //&#xf071
+                                unsafe += `<option class = 'external_food text-danger' value = '${JSON.stringify(val)}' data-icon = 'fa-skull-crossbones' >${val.description} </option>`;
+                            }else{
+                                safe += `<option class = 'external_food' value = '${JSON.stringify(val)}'>${val.description}</option>`;
+                            }
+                        });
+                        
+
+                     
                     }).join("");
+
+                    code = `<optgroup label = 'Safe'>` + safe + `</optgroup><optgroup label = 'Unsafe'>` + unsafe + `</optgroup>`
+
                     $('#intake_food_id_').append(code);
                     $('#set_food').append(code);
                     
@@ -591,8 +796,15 @@ const loadFromExtAPI = (extAPIURL, extAPIKEY, ctr)  =>{
             }
         })
         //AJAX:end
+        //
+    }
+})
         
    
    
 };
+
+
+
+
 

@@ -216,7 +216,13 @@
                                    ><small> <i class = "fas fa-times"></i> </small></button>
                                 </td>
                             </tr>
-                    "`);'
+                    "`);
+                    $("select").select2({
+                            width: "100%",
+                           templateSelection: formatSelect2,
+                           templateResult: formatSelect2,
+                     });
+                    '
                     >Add Intake <i class = "fas fa-plus"></i> </button>
 
                     <table class = "table table-striped" id = "intake_table">
@@ -263,11 +269,40 @@
   sessionStorage.setItem('token', '{{ session("token") }}');
   sessionStorage.setItem('user_id', '{{ session("user_id") }}');
 //
-let ctr = 0;
-while(ctr <= 50){
-    loadFromExtAPI("{{env('EXT_API_URL');}}","{{env('EXT_API_KEY');}}", ctr);
-    ctr++;
-}
+let checker = false;
+Swal.fire({
+                    text: 'Loading...',
+                    showConfirmButton: false,
+                    icon: 'info',
+                    timer: 20000,
+                    allowOutsideClick: false,
+                    didOpen: function(){
+                        loadFoods('{{ URL::to('/') }}');
+                        
+                        let ctr = 0;
+                        while(ctr <= 1){
+                            loadFromExtAPI("{{env('EXT_API_URL');}}","{{env('EXT_API_KEY');}}", ctr,'{{ URL::to('/') }}' );
+                            ctr++;
+                        }
+                        
+
+
+                      
+                    }
+                
+}).then(()=>{
+    $('select').select2({
+                            width: "100%",
+                           templateSelection: formatSelect2,
+                           templateResult: formatSelect2,
+     });
+})
 
 </script>
+<style>
+    .select2-results__option[aria-label = 'Unsafe']{
+	color: red;
+  
+}
+</style>
 @endsection

@@ -18,6 +18,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src = "https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script> 
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src = "https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+    <script src = "https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
     <script src="{{ asset('custom/js/script.js') }}"></script>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -29,6 +35,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" >
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel = "stylesheet" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
     <style>
         select {
           font-family: 'FontAwesome', Verdana 
@@ -111,6 +118,23 @@
                                      $('#intake_history_table').dataTable({
                                         'responsive': true, 'lengthChange': false,	//'autoWidth':  false,
                                         'dom': 'Bfrtip',
+                                        'responsive': true, 'lengthChange': false,	//'autoWidth':  false,
+                                    'dom': 'Bfrtip',
+                                
+                                            'buttons': [
+                                    
+                                            {
+                                                extend: 'collection',
+                                                text: 'Options',
+                                                buttons: [
+                                                    'copy',
+                                                    'excel',
+                                                    'csv',
+                                                    'pdf',
+                                                    'print'
+                                                ]
+                                            }
+                                            ],
                                     });
                                 //catch datatable ini error
                                 $.fn.dataTable.ext.errMode = ( settings, help, msg ) => { 
